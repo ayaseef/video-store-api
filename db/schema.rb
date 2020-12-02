@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_040426) do
     t.string "state"
     t.string "postal_code"
     t.string "phone"
+    t.integer "videos_checked_out_count"
   end
 
 end
