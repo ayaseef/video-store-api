@@ -17,6 +17,9 @@ describe RentalsController do
         post checkout_path, params: @request_body
       }.must_change "Rental.count", 1
 
+      # does a find_by
+      @customer.reload
+
       must_respond_with :ok
 
       expect(@customer.videos_checked_out_count).must_equal 4
