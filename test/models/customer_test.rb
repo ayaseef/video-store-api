@@ -36,6 +36,27 @@ describe Customer do
   end
 
   describe "validations" do
+    before do
+      @becca = customers(:customer_two)
+    end
+    it "is valid when all fields are present" do
+      result = @becca.valid?
 
+      expect(result).must_equal true
+    end
+
+    it "is invalid with a quantity less than zero" do
+      @becca.videos_checked_out_count = -1
+      result = @becca.valid?
+
+      expect(result).must_equal false
+    end
+
+    it "is invalid when the quantity is not an integer" do
+      @becca.videos_checked_out_count = nil
+      result = @becca.valid?
+
+      expect(result).must_equal false
+    end
   end
 end
