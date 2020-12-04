@@ -45,14 +45,28 @@ describe Customer do
       expect(result).must_equal true
     end
 
-    it "is invalid with a quantity less than zero" do
+    it "is valid when checked out video count is greater than or equal to zero" do
+      @becca.videos_checked_out_count = 0
+      result = @becca.valid?
+
+      expect(result).must_equal true
+    end
+
+    it "is invalid when checked out video count is less than zero" do
       @becca.videos_checked_out_count = -1
       result = @becca.valid?
 
       expect(result).must_equal false
     end
 
-    it "is invalid when the quantity is not an integer" do
+    it "is invalid when checked out video count is not an integer" do
+      @becca.videos_checked_out_count = 0.5
+      result = @becca.valid?
+
+      expect(result).must_equal false
+    end
+
+    it "must have checked out video count" do
       @becca.videos_checked_out_count = nil
       result = @becca.valid?
 
