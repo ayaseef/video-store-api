@@ -24,3 +24,4 @@ class Rental < ApplicationRecord
     return self.save
   end
 end
+
