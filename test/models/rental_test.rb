@@ -6,25 +6,6 @@ describe Rental do
                video: videos(:black_widow))
   }
 
-  describe "validations" do
-    it 'is valid when required fields are present' do
-      result = rental.valid?
-      expect(result).must_equal true
-    end
-
-    it 'must have a valid customer ID' do
-      rental.customer_id = nil
-      result = rental.valid?
-      expect(result).must_equal false
-    end
-
-    it 'must have a valid video ID' do
-      rental.video_id = nil
-      result = rental.valid?
-      expect(result).must_equal false
-    end
-  end
-
   describe "relations" do
     it "belongs to customer" do
       rental.must_respond_to :customer
@@ -34,6 +15,28 @@ describe Rental do
     it "belongs to video" do
       rental.must_respond_to :video
       (rental.video).must_be_kind_of Video
+    end
+  end
+
+  describe "validations" do
+    it 'is valid when required fields are present' do
+      expect(rental.valid?).must_equal true
+    end
+
+    it 'must have a valid customer ID' do
+      rental.customer_id = nil
+
+      expect(rental.valid?).must_equal false
+      expect(rental.errors.messages).must_include :customer_id
+      expect(rental.errors.messages[:customer_id]).must_equal ["can't be blank"]
+    end
+
+    it 'must have a valid video ID' do
+      rental.video_id = nil
+
+      expect(rental.valid?).must_equal false
+      expect(rental.errors.messages).must_include :video_id
+      expect(rental.errors.messages[:video_id]).must_equal ["can't be blank"]
     end
   end
 
@@ -61,6 +64,7 @@ describe Rental do
 
       it "will not save rental to db when available_inventory is equal to 0" do
         rental.video.available_inventory = 0
+
         expect(rental.check_out_video).must_equal false
       end
     end
@@ -88,6 +92,7 @@ describe Rental do
 
       it "will not save rental to db when videos_checked_out_count is equal to 0" do
         rental.customer.videos_checked_out_count = 0
+
         expect(rental.check_in_video).must_equal false
       end
     end

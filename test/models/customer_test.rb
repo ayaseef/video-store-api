@@ -40,37 +40,37 @@ describe Customer do
       @becca = customers(:customer_two)
     end
     it "is valid when all fields are present" do
-      result = @becca.valid?
-
-      expect(result).must_equal true
+      expect(@becca.valid?).must_equal true
     end
 
     it "is valid when checked out video count is greater than or equal to zero" do
       @becca.videos_checked_out_count = 0
-      result = @becca.valid?
 
-      expect(result).must_equal true
+      expect(@becca.valid?).must_equal true
     end
 
     it "is invalid when checked out video count is less than zero" do
       @becca.videos_checked_out_count = -1
-      result = @becca.valid?
 
-      expect(result).must_equal false
+      expect(@becca.valid?).must_equal false
+      expect(@becca.errors.messages).must_include :videos_checked_out_count
+      expect(@becca.errors.messages[:videos_checked_out_count]).must_equal ["must be greater than or equal to 0"]
     end
 
     it "is invalid when checked out video count is not an integer" do
       @becca.videos_checked_out_count = 0.5
-      result = @becca.valid?
 
-      expect(result).must_equal false
+      expect(@becca.valid?).must_equal false
+      expect(@becca.errors.messages).must_include :videos_checked_out_count
+      expect(@becca.errors.messages[:videos_checked_out_count]).must_equal ["must be an integer"]
     end
 
     it "must have checked out video count" do
       @becca.videos_checked_out_count = nil
-      result = @becca.valid?
 
-      expect(result).must_equal false
+      expect(@becca.valid?).must_equal false
+      expect(@becca.errors.messages).must_include :videos_checked_out_count
+      expect(@becca.errors.messages[:videos_checked_out_count]).must_equal ["is not a number"]
     end
   end
 end
