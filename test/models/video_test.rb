@@ -29,36 +29,50 @@ describe Video do
       video.available_inventory = "Kaida is awesome!!!"
       result = video.valid?
       expect(result).must_equal false
+      expect(video.errors.messages).must_include :available_inventory
+      expect(video.errors.messages[:available_inventory]).must_equal ["is not a number"]
     end
 
     it 'must have an available_inventory' do
       video.available_inventory = nil
       result = video.valid?
       expect(result).must_equal false
+      expect(video.errors.messages).must_include :available_inventory
+      expect(video.errors.messages[:available_inventory]).must_equal ["can't be blank", "is not a number"]
     end
 
     it 'must have a video title' do
       video.title = nil
       result = video.valid?
       expect(result).must_equal false
+      expect(video.errors.messages).must_include :title
+      expect(video.errors.messages[:title]).must_equal ["can't be blank"]
+
     end
 
     it 'must have a video overview' do
       video.overview = nil
       result = video.valid?
       expect(result).must_equal false
+      expect(video.errors.messages).must_include :overview
+      expect(video.errors.messages[:overview]).must_equal ["can't be blank"]
+
     end
 
     it 'must have a video total_inventory' do
       video.total_inventory = nil
       result = video.valid?
       expect(result).must_equal false
+      expect(video.errors.messages).must_include :total_inventory
+      expect(video.errors.messages[:total_inventory]).must_equal ["can't be blank"]
     end
 
     it 'must have a video release_date' do
       video.release_date = nil
       result = video.valid?
       expect(result).must_equal false
+      expect(video.errors.messages).must_include :release_date
+      expect(video.errors.messages[:release_date]).must_equal ["can't be blank"]
     end
   end
 
