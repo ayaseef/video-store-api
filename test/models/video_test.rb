@@ -20,8 +20,14 @@ describe Video do
       result = video.valid?
       expect(result).must_equal false
     end
+    
+    it 'is valid with available inventory of zero' do
+      video = videos(:wonder_woman)
+      video.available_inventory = 0
+      result = video.valid?
+      expect(result).must_equal true
+    end
 
-    #HOW TO DO EQUAL TO 0 testing?
     it 'is valid with available inventory of greater than zero' do
       video = videos(:wonder_woman)
       result = video.valid?
@@ -45,6 +51,20 @@ describe Video do
     it 'must have a video title' do
       video = videos(:wonder_woman)
       video.title = nil
+      result = video.valid?
+      expect(result).must_equal false
+    end
+
+    it 'must have a video overview' do
+      video = videos(:wonder_woman)
+      video.overview = nil
+      result = video.valid?
+      expect(result).must_equal false
+    end
+
+    it 'must have a video total_inventory' do
+      video = videos(:wonder_woman)
+      video.total_inventory = nil
       result = video.valid?
       expect(result).must_equal false
     end
